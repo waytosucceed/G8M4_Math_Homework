@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Questions</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/x-icon" href="./assests/logo/Logo_last.png" />
+  <script src="./questions.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.7.0/dist/confetti.browser.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+            font-family: Arial, sans-serif;
+            /* background-color: #678923; */
+            /* min-height: 100vh; */
+            background: url("assests/Backgrounds.png");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            object-fit: cover;
+min-height: 100vh;
+        }
+
+
+
+
+
+.main-container {
+  display: flex;
+  /* height: calc(100vh - 120px); */
+  margin: 20px;
+  gap: 20px;
+}
+
+.question-sidebar {
+  
+  max-height: fit-content;
+  overflow-y: auto;
+}
+
+.question-sidebar h2 {
+  margin-top: 0;
+  color: white;
+  font-size: 1.3rem;
+  text-align: center;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  border-bottom: 2px solid rgba(255,255,255,0.3);
+  padding-bottom: 10px;
+}
+
+#buttonContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#buttonContainer button {
+  padding: 12px 15px;
+            border: none;
+            border-radius: 10px;
+            background-color: #f5f5f5; /* Grayish white background */
+            color: black;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            width: 85%;
+            text-align: center;
+            box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.8); /* Dark shadow bottom right */
+            position: relative;
+}
+
+#buttonContainer button:hover {
+  background-color: #e8e8e8;
+            transform: translateY(-1px);
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.7);
+}
+
+#buttonContainer button.active {
+  /* background: linear-gradient(45deg, #4CAF50, #45a049);
+  box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+  transform: translateY(-2px); */
+  background-color: #f5f5f5;
+            box-shadow: none; /* Remove shadow when active */
+            border: 3px solid #000; /* Dark black outline */
+            transform: translateY(2px); /* Pressed effect */
+}
+
+.content-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 15px 30px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  backdrop-filter: blur(10px);
+  overflow-y: auto;
+}
+
+#heading {
+  color: #333;
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: 10px;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: bold;
+}
+
+.question-content {
+  display: flex;
+  gap: 2%;
+  flex: 1;
+  align-items: flex-start;
+  min-height: 350px;
+}
+
+/* New class for centered layout when no image */
+.question-content.no-image {
+  justify-content: center;
+}
+
+.question-image-area {
+  flex: 0 0 38%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* min-height: 350px; */
+}
+
+#picdiv {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* border: 3px dashed rgba(102, 126, 234, 0.3);
+  border-radius: 20px;
+  background: linear-gradient(145deg, #f8f9ff, #e8e9ff);
+  transition: all 0.3s ease; */
+}
+
+#picdiv:hover {
+  border-color: rgba(102, 126, 234, 0.6);
+  background: linear-gradient(145deg, #f0f2ff, #e0e4ff);
+}
+
+#picdiv img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 15px;
+  /* box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease; */
+}
+
+#picdiv img:hover {
+  transform: scale(1.02);
+}
+
+.question-options-area {
+  flex: 0 0 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* New class for full width when no image */
+.question-options-area.full-width {
+  flex: 1;
+  max-width: 800px; /* Add max-width to prevent overly wide layout */
+  margin: 0 auto; /* Center the options area */
+}
+
+/* ── table-graph questions: table on the left, grid on the right ──
+   --tg-w is each column's natural width, set inline per question. Used as
+   both flex-basis and max-width, so the pair sits at natural size when
+   there's room and shrinks proportionally when there isn't. */
+.vt-tg-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(8px, 1.2vw, 18px);
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+.vt-tg-left {
+  /* shrinks half as fast as the grid, so a tight row costs the graph
+     width before it costs the table legibility */
+  flex: 1 0.5 var(--tg-w);
+  max-width: var(--tg-w);
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.vt-tg-graph {
+  flex: 1 1 var(--tg-w);
+  max-width: var(--tg-w);
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+}
+/* too narrow for two columns — fall back to table above graph */
+@media (max-width: 760px) {
+  .vt-tg-row {
+    flex-direction: column;
+    gap: 14px;
+  }
+  .vt-tg-left,
+  .vt-tg-graph {
+    flex: 0 0 auto;
+    max-width: min(100%, var(--tg-w));
+  }
+}
+
+#question {
+  text-align: left;
+  font-size: 2.3rem;
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 30px;
+  line-height: 1.5;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Center question text when no image */
+#question.centered {
+  text-align: center;
+}
+
+#questiondiv {
+  display: flex;
+  flex-direction: column;
+}
+
+.menu {
+  margin-bottom: 30px;
+}
+
+#options {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+#options li:hover {
+  border-color: #667eea;
+  background: linear-gradient(145deg, #f8f9ff, #e8e9ff);
+  transform: scale(1.05);
+  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+}
+
+#options li.selected {
+  border-color: #667eea;
+  background: linear-gradient(145deg, #e3f2fd, #bbdefb);
+  transform: scale(1.02);
+}
+
+#options li.correct {
+  border-color: #4CAF50;
+  background: linear-gradient(145deg, #d4edda, #c3e6cb);
+  color: #155724;
+  box-shadow: 0 10px 25px rgba(76, 175, 80, 0.4);
+}
+
+#options li.incorrect {
+  border-color: #f44336;
+  background: linear-gradient(145deg, #f8d7da, #f1c2c7);
+  color: #721c24;
+  box-shadow: 0 10px 25px rgba(244, 67, 54, 0.4);
+}
+
+#head {
+  width: 100%;
+}
+
+.grid-layout {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  text-align: center;
+}
+
+.option-container {
+  width: 90%;
+}
+
+/* .option-container:hover {
+  border-color: #667eea;
+  background: linear-gradient(145deg, #f8f9ff, #e8e9ff);
+  color: #333;
+  transform: scale(1.05);
+  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+}
+
+.option-container.correct {
+  border-color: #4CAF50;
+  background: linear-gradient(145deg, #d4edda, #c3e6cb);
+  color: #155724;
+}
+
+.option-container.incorrect {
+  border-color: #f44336;
+  background: linear-gradient(145deg, #f8d7da, #f1c2c7);
+  color: #721c24;
+} */
+
+.option-text {
+  text-align: center;
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.text-only {
+  display: block;
+}
+
+.button-area {
+  display: flex;
+  gap: 20px;
+  margin-top: 30px;
+  justify-content: center;
+}
+
+/* Center buttons when no image */
+.button-area.centered {
+  justify-content: center;
+}
+
+.btnOption {
+  width: 100%;
+  padding: 20px;
+  border: 3px solid #ddd;
+  border-radius: 15px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1.4em;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* word-break: break-word; */
+  position: relative;
+}
+
+#subbtn, #nextbtn {
+  padding: 15px 35px;
+  font-size: 1.6rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  text-align: center;
+}
+
+#subbtn {
+  background: linear-gradient(45deg, #4CAF50, #45a049);
+  color: white;
+}
+
+#subbtn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(76, 175, 80, 0.4);
+}
+
+#nextbtn {
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  color: white;
+}
+
+/* Green for submitted questions */
+.answered-btn {
+    background-color: #28a745 !important;
+    color: white !important;
+    border-color: #28a745 !important;
+}
+
+/* Yellow for not submitted questions */
+.unanswered-btn {
+    background-color: #ffc107 !important;
+    color: #212529 !important;
+    border-color: #ffc107 !important;
+}
+
+/* Current question keeps default btnButton styling */
+.btnButton {
+    /* Your existing default button styles */
+}
+
+#nextbtn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+}
+
+#result {
+  margin-top: 20px;
+  font-size: 1.3rem;
+  font-weight: 600;
+  text-align: center;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .main-container {
+    flex-direction: column;
+    margin: 10px;
+    height: auto;
+  }
+  
+  .question-sidebar {
+    width: 100%;
+    max-height: 150px;
+    margin-bottom: 20px;
+    padding: 15px;
+  }
+  
+  #buttonContainer {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  #buttonContainer button {
+    width: auto;
+    min-width: 60px;
+    font-size: 0.8rem;
+    padding: 10px 12px;
+  }
+  
+  .question-content {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .question-image-area,
+  .question-options-area {
+    flex: none;
+  }
+  
+  .question-options-area.full-width {
+    max-width: none;
+  }
+  
+  #question {
+    font-size: 1.4rem;
+    text-align: center;
+  }
+  
+  #options {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  #options li {
+    min-height: 60px;
+    font-size: 1rem;
+    padding: 15px;
+  }
+  
+  .option-container {
+    min-height: 100px;
+    padding: 15px;
+  }
+  
+  #subbtn, #nextbtn {
+    font-size: 1rem;
+    padding: 12px 25px;
+  }
+  
+  .button-area {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  #heading {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-container {
+    margin: 5px;
+  }
+  
+  .content-area {
+    padding: 20px;
+  }
+  
+  #heading {
+    font-size: 1.5rem;
+  }
+  
+  #question {
+    font-size: 1.2rem;
+  }
+  
+  #options li {
+    font-size: 0.9rem;
+    min-height: 50px;
+    padding: 12px;
+  }
+}
+
+/* Animation enhancements */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.content-area {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* #options li {
+  animation: fadeInUp 0.6s ease-out;
+} */
+
+/* #options li:nth-child(1) { animation-delay: 0.1s; }
+#options li:nth-child(2) { animation-delay: 0.2s; }
+#options li:nth-child(3) { animation-delay: 0.3s; }
+#options li:nth-child(4) { animation-delay: 0.4s; } */
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, #5a6fd8, #6a4190);
+}
+/* ============================
+   Attractive Dropdown Styling
+============================= */
+
+.dropdown-input {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  /* background-color: #ffffff; */
+  border: 2px solid black;
+  border-radius: 10px;
+
+  /* right pad only reserves room for the custom arrow drawn below */
+  padding: 10px 22px 10px 8px;
+  font-size: 0.8em;
+  font-weight: 600;
+  color: #333;
+
+  /* hug the widest option instead of a fixed width, so a "+ / -" dropdown
+     stays small while a worded one still fits */
+  width: auto;
+  min-width: 0;
+  cursor: pointer;
+  outline: none;
+  text-align: center;
+
+  /* box-shadow: 0 4px 10px rgba(111, 66, 193, 0.25); */
+  transition: all 0.25s ease;
+}
+
+/* Hover */
+.dropdown-input:hover {
+  /* background-color: #f6f0ff; */
+  /* border-color: #59339d; */
+}
+
+/* Focus */
+.dropdown-input:focus {
+  /* border-color: #ff9800; */
+  box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.35);
+}
+
+/* Custom arrow */
+.dropdown-input {
+  background-image:
+    linear-gradient(45deg, transparent 50%, #6f42c1 50%),
+    linear-gradient(135deg, #6f42c1 50%, transparent 50%);
+  background-position:
+    calc(100% - 18px) calc(50% - 3px),
+    calc(100% - 12px) calc(50% - 3px);
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+}
+
+/* When selected */
+.dropdown-input:not([value=""]) {
+  /* background-color: #ede7f6; */
+}
+
+.sup-input {
+  vertical-align: super;
+  position: relative;
+  top: -6px;
+}
+
+/* bhanu added start  */
+
+/* ===== Addition / Subtraction Grid ===== */
+.addition-grid {
+  display: grid;
+  grid-template-columns: 48px repeat(var(--cols, 4), 60px);
+  gap: 6px 4px;
+  align-items: center;
+  justify-items: center;
+  font-size: 2rem;
+  font-weight: bold;
+  padding: 20px;
+}
+
+.cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 52px;
+  min-height: 52px;
+}
+
+.cell.carry {
+  font-size: 1rem;
+  color: #888;
+  align-items: flex-end;
+  padding-bottom: 2px;
+}
+
+.cell.place {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.cell.digit {
+  font-size: 2.2rem;
+  font-weight: bold;
+}
+
+.cell.plus {
+  font-size: 2.2rem;
+  font-weight: bold;
+  justify-content: flex-end;
+  padding-right: 4px;
+}
+
+.cell.result {
+  font-size: 2.2rem;
+  font-weight: bold;
+}
+
+.addition-line {
+  height: 3px;
+  background-color: #222;
+  grid-column: 1 / -1;
+  width: 100%;
+  margin: 2px 0;
+}
+
+.addition-input {
+  width: 52px;
+  height: 52px;
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-align: center;
+  border: 2px solid #aaa;
+  border-radius: 6px;
+  outline: none;
+  background: #fff;
+  color: #222;
+}
+
+.addition-input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0,123,255,0.2);
+}
+
+.carry-input {
+  width: 40px;
+  height: 40px;
+  font-size: 1.2rem;
+}
+
+.lcm-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;  /* was inline-block */
+  padding: 0;
+  margin: 20px auto;
+  width: 100%;          /* ADD THIS */
+}
+
+.lcm-row {
+  display: grid;
+  grid-template-columns: 60px repeat(var(--num-cols, 2), 80px); /* ✅ dynamic */
+  align-items: center;
+  border-bottom: 2px solid black;
+  min-height: 50px;
+  margin: 0 auto;
+}
+
+.lcm-divisor {
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: bold;
+  border-right: 3px solid black;
+  padding: 8px;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lcm-cell {
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: bold;
+  padding: 8px;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lcm-input {
+  width: 55px;
+  height: 38px;
+  text-align: center;
+  font-size: 2.0rem;
+  border: 2px solid #007bff;
+  border-radius: 6px;
+}
+
+.lcm-result {
+  margin-top: 16px;
+  font-size: 1.7rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+/* Auto-center any <img> inside question text/content */
+#question img,
+.question-container img {
+  display: block;
+  margin: 10px auto;
+  max-width: 90%;
+  height: auto;
+}
+/* bhanu ended  */
+
+
+
+</style>
+<body>
+  <audio id="submit-sound" src="./assests/sounds/submit.mp3"></audio>
+  
+  <header class="header">
+    <img src="./assests/logo/Logo.png" alt="Logo" class="logo">
+    <span><img src="./assests/logo/header.png" alt="Header" class="header-image"></span>
+  </header>
+  
+  <div class="main-container">
+    <!-- Left sidebar for question buttons -->
+    <div class="question-sidebar">
+      <div id="buttonContainer"></div>
+    </div>
+    
+    <!-- Right content area -->
+    <div class="content-area">
+       <h2 id="heading"></h2>
+        <div id="question" style="text-align: center;">
+            <!-- Question text will be displayed here -->
+          </div>
+      <div class="question-content">
+        <!-- Left side - Question image -->
+        <div class="question-image-area">
+          <div id="picdiv">
+            <!-- Question image will be displayed here -->
+          </div>
+        </div>
+        
+        <!-- Right side - Question and options -->
+        <div class="question-options-area">
+          <div id="questiondiv">
+            <div class="menu" id="head">
+              <ul id="options"></ul>
+            </div>
+            
+            <div class="button-area">
+              <button id="subbtn" class="btn btn-success" onclick="checkAnswer()">Submit Answer</button>
+              <button id="nextbtn" class="btn btn-primary" onclick="newques()" style="display:none">Next</button>
+            </div>
+            
+            <!-- <p id="result"></p> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+  //   function disableDevToolsSilently() {
+  //   // 1️⃣ Disable right-click
+  //   document.addEventListener("contextmenu", e => e.preventDefault());
+
+  //   // 2️⃣ Disable common DevTools keyboard shortcuts
+  //   document.addEventListener("keydown", function (e) {
+  //     if (
+  //       e.key === "F12" ||
+  //       (e.ctrlKey && e.shiftKey && ["I", "J", "C"].includes(e.key)) ||
+  //       (e.ctrlKey && e.key === "U")
+  //     ) {
+  //       e.preventDefault();
+  //       e.stopPropagation();
+  //       return false;
+  //     }
+  //   });
+
+  //   // 3️⃣ Disable text selection & copy
+  //   document.body.style.userSelect = "none";
+  //   document.body.style.webkitUserSelect = "none";
+  //   document.body.style.mozUserSelect = "none";
+
+  //   // 4️⃣ Silent DevTools detection (no alert, no redirect)
+  //   let devtoolsOpen = false;
+  //   const threshold = 160;
+
+  //   setInterval(() => {
+  //     const widthDiff = window.outerWidth - window.innerWidth;
+  //     const heightDiff = window.outerHeight - window.innerHeight;
+
+  //     devtoolsOpen = widthDiff > threshold || heightDiff > threshold;
+
+  //     if (devtoolsOpen) {
+  //       // Silent sabotage
+  //       console.clear();
+  //       debugger;
+  //     }
+  //   }, 800);
+  // }
+
+  // // Call it
+  // disableDevToolsSilently();
+  </script>
+</body>
+</html>

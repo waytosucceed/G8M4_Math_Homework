@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Topics</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@300;400;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/x-icon" href="./assests/logo/Logo_last.png" />
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+  overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+    .moving-div {
+      position: absolute;
+      /* Use absolute positioning */
+      bottom: 0;
+      animation: move-left-right 12s linear infinite;
+      /* Total duration */
+    }
+
+    .grass {
+      position: absolute;
+      /* Use absolute positioning */
+      bottom: 0;
+      left: 0;
+      right: 0;
+      img{
+        width: 100%;
+      }
+      z-index: -1;
+    }
+
+    @keyframes move-left-right {
+      0% {
+        left: -90px;
+        /* Start from the left */
+      }
+
+      100% {
+        left: calc(100% );
+                /* Move to the right (adjust based on the GIF's width) */
+      }
+    }
+
+
+    /* Custom styles for a better layout and larger buttons */
+    body {
+      background-color: #CEE5D0;
+      font-family: Arial, sans-serif;
+    }
+
+
+    /* .logo {
+      height: 40px;
+    } */
+
+    .header-image {
+      /* height: 60px; */
+    }
+
+    .container {
+      margin-top: 30px;
+      width: 90%;
+    }
+    .bouncing-ball {
+  animation: bounce 3s ease-in-out 1;
+}
+.bouncing-ball1 {
+  animation: bounce 3s ease-in-out 1;
+  animation-delay: 2s;
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  15%{
+    transform: translateY(-150px);
+  }
+  30%{
+    transform: translateY(0px);
+  }
+  45%{
+    transform: translateY(-100px);
+  }
+  60%{
+    transform: translateY(0px);
+  }
+  75%{
+    transform: translateY(-50px);
+  }
+  100%{
+    transform: translateY(0px);
+  }
+  
+}
+
+
+    .rotate-in-up-left {
+  animation: rotate-in-up-left 2s ease 1;
+}
+@keyframes rotate-in-up-left {
+  0% {
+    
+    transform-origin: left bottom;
+    transform: rotate(90deg);
+    opacity: 0;
+  }
+  100% {
+    transform-origin: left bottom;
+    transform: rotate(0);
+    opacity: 1;
+  }
+}
+
+    h1 {
+      margin-bottom: 30px;
+      color: #004080;
+      /* Dark Blue */
+    }
+
+    #buttonContainer {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn-large {
+      font-size: 18px;
+      padding: 10px 20px;
+      margin: 10px;
+      border-radius: 5px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .btn-large:hover {
+      background-color: #003366;
+      /* Darker Blue */
+      color: white;
+    }
+
+    .btn.disabled-btn {
+      background-color: #d3d3d3;
+      border-color: #d3d3d3;
+      color: #a9a9a9;
+      cursor: not-allowed;
+    }
+
+    .btn-view-results {
+      font-size: 18px;
+      padding: 15px 30px;
+      margin-top: 20px;
+      border-radius: 5px;
+      transition: background-color 0.3s, color 0.3s;
+      background-color: #5bc0de;
+      color: white;
+      border: none;
+    }
+
+    .btn-view-results:hover {
+      background-color: #31b0d5;
+      /* Darker Bootstrap info color */
+    }
+
+    .btn-view-results:disabled {
+      background-color: #d3d3d3;
+      color: #a9a9a9;
+      cursor: not-allowed;
+    }
+    .rotate-in-down-left {
+  animation: rotate-in-down-left 3s ease 1;
+}
+.rotate-in-down-second {
+  position: absolute;
+  left: 30%;
+  bottom: 0;
+  margin-right: 5% ;
+  animation: rotate-in-down-left 2s ease 1;
+  animation-delay: 2s ;
+  }
+
+@keyframes rotate-in-down-left {
+  0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+	40% {transform: translateY(-100px);}
+	60% {transform: translateY(-90px);}
+  80% {transform: translateY(-80px);}
+	100% {transform: translateY(-40px);}
+  
+}
+
+
+#pic1{
+  position: absolute;
+  left: 10%;
+  bottom: 2%;
+  margin-right: 5% ;
+}
+#pic2{
+  position: absolute;
+  left: 80%;
+  bottom: 2%;
+  margin-right: 5% ;
+}
+#pic3{
+  position: absolute;
+  left: 30%;
+  bottom: 2%;
+  margin-right: 5% ;
+}
+#pic4{
+  position: absolute;
+  left: 55%;
+  bottom: 2%;
+  margin-right: 5% ;
+}
+.hithere {
+  animation: hithere 2s ease 1;
+}
+@keyframes hithere {
+  30% { transform: scale(1.2); }
+  40%, 60% { transform: rotate(-20deg) scale(1.2); }
+  50% { transform: rotate(20deg) scale(1.2); }
+  70% { transform: rotate(0deg) scale(1.2); }
+  100% { transform: scale(1); }
+}
+.flip {
+	backface-visibility: visible !important;
+	animation: flip 2s ease 1;
+}
+@keyframes flip {
+	0% {
+		transform: perspective(400px) rotateY(0);
+		animation-timing-function: ease-out;
+	}
+	40% {
+		transform: perspective(400px) translateZ(100px) rotateY(170deg);
+		animation-timing-function: ease-out;
+	}
+	50% {
+		transform: perspective(400px) translateZ(100px) rotateY(190deg) scale(1);
+		animation-timing-function: ease-in;
+	}
+	80% {
+		transform: perspective(400px) rotateY(360deg) scale(.95);
+		animation-timing-function: ease-in;
+	}
+	100% {
+		transform: perspective(400px) scale(1);
+		animation-timing-function: ease-in;
+	}
+}
+
+  </style>
+  <script>
+    const uniqueKey = "G8M4Math_Homework";
+    const data = JSON.parse(localStorage.getItem(uniqueKey)) || {};
+    console.log(data, "dataindex");
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const startSound = new Audio('./assests/sounds/start.mp3');
+      startSound.play()
+        .then(() => console.log('Start sound played successfully'))
+        .catch(error => console.error('Error playing start sound:', error));
+
+      fetch('questions.json')
+        .then(response => response.json())
+        .then(data => {
+          populateButtons(data.topics);
+          updateViewResultsButton(data.topics);
+        })
+        .catch(error => console.error('Error loading the JSON file:', error));
+    });
+
+    function populateButtons(topics) {
+    const buttonContainer = document.getElementById('buttonContainer');
+    buttonContainer.innerHTML = ''; // Clear previous buttons
+
+    topics.forEach((topic, index) => {
+        const button = document.createElement('button');
+        button.className = 'btn btn-primary btn-large';
+        button.innerText = topic.heading;
+        button.onclick = () => {
+            window.location.href = `questions.html?topic=${encodeURIComponent(topic.heading)}`;
+        };
+
+        // Check if the topic is completed
+        const isCompleted =
+          localStorage.getItem(uniqueKey) &&
+          JSON.parse(localStorage.getItem(uniqueKey))[
+          topic.heading + "_completed"
+          ];
+
+        if (isCompleted) {
+          button.classList.add("disabled-btn");
+          button.disabled = true;
+        }
+
+        // Disable the button if not eligible
+        // if (isCompleted || !isPreviousCompleted) {
+        //     button.classList.add('disabled-btn');
+        //     button.disabled = true;
+        // }
+
+        buttonContainer.appendChild(button);
+    });
+}
+
+
+    function updateViewResultsButton(topics) {
+      const viewResultsButton = document.getElementById("viewResultsButton");
+      const allCompleted = topics.every(topic => {
+        const isCompleted = localStorage.getItem(uniqueKey) && JSON.parse(localStorage.getItem(uniqueKey))[topic.heading + '_completed'];
+        return isCompleted;
+      });
+
+      console.log("all", allCompleted);
+
+      if (allCompleted) {
+        viewResultsButton.disabled = false;
+
+      } else {
+        viewResultsButton.disabled = true;
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <header class="header">
+    <img src="./assests/logo/Logo.png" alt="Logo" class="logo">
+    <img src="./assests/logo/header.png" alt="Header" class="header-image">
+  </header>
+  <main class="container">
+
+    <h1 class="text-center">Select a Topic</h1>
+    <div id="buttonContainer" class="text-center"></div>
+    <div class="text-center">
+      <!-- <button id="viewResultsButton" class="btn btn-view-results" disabled>
+        <a href="graph.html" style="color: white; text-decoration: none;">View Results</a>
+      </button> -->
+      <button id="viewResultsButton" class="btn btn-view-results" disabled onclick="handleViewResultsClick(event)">
+        <span style="color: white; text-decoration: none;" >View Results</span>
+      </button>
+    
+      <div class="grass">
+        <img src="./assests/grass.png" alt="grass" >
+
+      </div>
+      
+        <img class="bouncing-ball" id="pic1" src="./assests/sphere.png" alt="Moving Boy" style="width: 150px;">
+        <img class="hithere" id="pic3" src="./assests/cube.png" alt="Moving Boy" style="width: 170px;">
+        <img class="flip" id="pic4" src="./assests/sphere1.png" alt="Moving Boy" style="width: 150px;">
+        <img class="bouncing-ball1" id="pic2" src="./assests/sphere.png" alt="Moving Boy" style="width: 150px;">
+      
+      <script>
+        // document.addEventListener('DOMContentLoaded', function() {
+        //   const storedTimestamp = localStorage.getItem('viewResultsTimestamp');
+        //   if (storedTimestamp) {
+        //     const currentTime = new Date().getTime();
+        //     const timestamp = new Date(storedTimestamp).getTime();
+        //     const oneDayInMillis = 24 * 60 * 60 * 1000; // 1 day in milliseconds
+
+        //     if (currentTime - timestamp >= oneDayInMillis) {
+        //       clearLocalStorage();
+        //       // Remove the timestamp after clearing local storage
+        //       localStorage.removeItem('viewResultsTimestamp');
+        //     }
+        //   }
+        // });
+
+        function clearLocalStorage() {
+          console.log('Clearing local storage...');
+
+          // Fetch the topics from the JSON file
+          fetch('questions.json')
+            .then(response => response.json())
+            .then(data => {
+              const topics = data.topics;
+
+              topics.forEach(topic => {
+                localStorage.removeItem(topic.heading + '_completed');
+                localStorage.removeItem(topic.heading + '_score');
+                localStorage.removeItem(topic.heading + '_totalQuestions');
+              });
+
+              localStorage.removeItem('topics');
+
+              console.log('Local storage cleared.');
+            })
+            .catch(error => console.error('Error clearing local storage:', error));
+        }
+// Function to handle the button click
+function handleViewResultsClick(event) {
+    // Check if the button is enabled before proceeding
+    if (event.target.disabled) {
+        return; // Prevent action if the button is disabled
+    }
+    
+    // Open the graph.html4 page when the button is clicked
+    window.location.href = 'graph.html'; // This will open the graph.html4 file
+}
+
+function disableDevToolsSilently() {
+    // 1️⃣ Disable right-click
+    document.addEventListener("contextmenu", e => e.preventDefault());
+
+    // 2️⃣ Disable common DevTools keyboard shortcuts
+    document.addEventListener("keydown", function (e) {
+      if (
+        e.key === "F12" ||
+        (e.ctrlKey && e.shiftKey && ["I", "J", "C"].includes(e.key)) ||
+        (e.ctrlKey && e.key === "U")
+      ) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }
+    });
+
+    // 3️⃣ Disable text selection & copy
+    document.body.style.userSelect = "none";
+    document.body.style.webkitUserSelect = "none";
+    document.body.style.mozUserSelect = "none";
+
+    // 4️⃣ Silent DevTools detection (no alert, no redirect)
+    let devtoolsOpen = false;
+    const threshold = 160;
+
+    setInterval(() => {
+      const widthDiff = window.outerWidth - window.innerWidth;
+      const heightDiff = window.outerHeight - window.innerHeight;
+
+      devtoolsOpen = widthDiff > threshold || heightDiff > threshold;
+
+      if (devtoolsOpen) {
+        // Silent sabotage
+        console.clear();
+        debugger;
+      }
+    }, 800);
+  }
+
+  // Call it
+  disableDevToolsSilently();
+ </script>
+
+
+
+  </main>
+</body>
+
+</html>

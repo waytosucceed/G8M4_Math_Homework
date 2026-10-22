@@ -1,0 +1,681 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Results</title>
+    <link rel="stylesheet" href="wts.css" />
+    <link rel="icon" type="image/x-icon" href="./assests/logo/Logo_last.png" />
+
+    <!-- Include Chart.js from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Include html2canvas and jsPDF libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5em;
+        z-index: 9999;
+        display: none;
+      }
+      body {
+        font-family: "Comic Neue", Arial, sans-serif;
+        font-weight: 500;
+        background-color: #6482ad !important;
+        margin: 0;
+        padding: 0;
+        color: #333;
+      }
+
+      #heading {
+        margin-top: 25px;
+        color: #d6b65b;
+        font-size: 2.5rem;
+      }
+
+      .chart-container {
+        width: 80%;
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border: 1px solid #ddd;
+      }
+
+      canvas {
+        border-radius: 8px;
+        background-color: #f9f9f9;
+      }
+
+      .marks-breakdown {
+        text-align: left;
+        margin: 20px auto;
+        width: 80%;
+        max-width: 800px;
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border: 1px solid #ddd;
+      }
+
+      .marks-breakdown h2 {
+        margin-top: 0;
+        color: #333;
+      }
+
+      .marks-breakdown ul {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      .marks-breakdown li {
+        margin-bottom: 10px;
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+      }
+
+      .marks-breakdown li:last-child {
+        border-bottom: none;
+      }
+
+      .download-button {
+        display: block;
+        width: 25%;
+        margin-top: 30px;
+        padding: 10px;
+        font-size: 1.1em;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-align: center;
+        box-shadow:
+          rgba(0, 0, 0, 0.16) 0px 3px 6px,
+          rgba(0, 0, 0, 0.23) 0px 3px 6px;
+        font-weight: 600;
+        background-color: greenyellow;
+        color: black;
+      }
+
+      .download-button:hover {
+        color: #fff;
+        background-color: #ff0000;
+      }
+
+      #questiondiv,
+      #picdiv {
+        margin: 20px auto;
+        width: 80%;
+        max-width: 800px;
+        padding: 20px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border: 1px solid #ddd;
+      }
+
+      #questiondiv h3 {
+        margin-top: 0;
+        color: #d6b65b;
+      }
+
+      /* #questiondiv div {
+        padding: 10px;
+      } */
+      @media print {
+        body {
+          font-size: 12pt;
+        }
+
+        .chart-container,
+        .marks-breakdown,
+        #questiondiv,
+        #picdiv {
+          width: 100%;
+          margin: 0;
+          padding: 0;
+          box-shadow: none;
+          border: none;
+        }
+
+        canvas {
+          max-width: 100%;
+        }
+
+        .download-button {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="header">
+      <img src="./assests/logo/Logo.png" alt="Logo" class="logo" />
+      <img src="./assests/logo/header.png" alt="Header" class="header-image" />
+    </header>
+    <div style="display: flex; justify-content: center">
+      <img
+        src="./assests/download.gif"
+        alt="Download Animation"
+        width="150px"
+        style="margin-top: 30px"
+      />
+      <button class="download-button" id="downloadBtn">Download Report</button>
+    </div>
+    <div class="chart-container">
+      <canvas id="myBarChart"></canvas>
+    </div>
+
+    <div class="marks-breakdown" id="breakdown">
+      <h2>Marks Breakdown - <span id="className"></span></h2>
+      <ul id="marksList"></ul>
+    </div>
+
+    <div id="picdiv"></div>
+    <div id="questiondiv"></div>
+    <div style="display: flex; justify-content: center">
+      <img
+        src="./assests/download.gif"
+        alt="Download Animation"
+        width="150px"
+        style="margin-top: 30px"
+      />
+      <button class="download-button" id="downloadBtn2">Download Report</button>
+    </div>
+
+    <div class="loading-overlay" id="loadingOverlay">Downloading...</div>
+
+    <script>
+      const uniqueKey = "G8M4Math_Homework";
+      const className = "G8M4Math_Homework";
+      document.getElementById("className").innerText = className;
+
+      const wellDoneSound = new Audio("./assests/sounds/well-done.mp3");
+      wellDoneSound
+        .play()
+        .then(() => {
+          console.log("Well-done sound played successfully");
+        })
+        .catch((error) => {
+          console.error("Error playing well-done sound:", error);
+        });
+
+      function getFromLocalStorage(key) {
+        let storageData = JSON.parse(localStorage.getItem(key)) || {};
+        return storageData;
+      }
+
+      function clearLocalStorage() {
+        console.log("Clearing local storage...");
+        localStorage.removeItem(uniqueKey);
+      }
+
+      function loadAllResults() {
+        const questionContentDiv = document.getElementById("questiondiv");
+        const picContentDiv = document.getElementById("picdiv");
+        document.getElementById("picdiv").style.display = "none";
+
+        questionContentDiv.innerHTML = "";
+        picContentDiv.innerHTML = "";
+
+        displayContentForKey(uniqueKey);
+      }
+
+      function displayContentForKey(uniqueKey) {
+        const data = getFromLocalStorage(uniqueKey);
+        console.log("data", data);
+
+        if (data && typeof data === "object") {
+          // Sort so _question_content always comes before _question_content_p2
+          const sortedKeys = Object.keys(data).sort((a, b) => {
+            const aP2 = a.includes("_question_content_p2");
+            const bP2 = b.includes("_question_content_p2");
+            if (aP2 && !bP2) return 1;
+            if (!aP2 && bP2) return -1;
+            return 0;
+          });
+          sortedKeys.forEach((key) => {
+            console.log("key", key);
+
+            if (key.includes("_question_content")) {
+              console.log("ok");
+              const content = data[key];
+              // Determine topic name — strip _p2 suffix if present
+              const topicName = key
+                .replace("_question_content_p2", "")
+                .replace("_question_content", "");
+              const isPage2 = key.includes("_question_content_p2");
+
+              if (!content) return; // skip null/empty page2 entries
+
+              const topicContainer = document.createElement("div");
+              topicContainer.style.marginBottom = "20px";
+              topicContainer.style.padding = "10px";
+              topicContainer.style.border = "1px solid #ddd";
+              topicContainer.style.borderRadius = "8px";
+              topicContainer.style.backgroundColor = "#fff";
+
+              const heading = document.createElement("h3");
+              heading.textContent = isPage2
+                ? topicName + " (continued)"
+                : topicName;
+              heading.style.marginTop = "0";
+              heading.style.color = "#D6B65B";
+              topicContainer.appendChild(heading);
+
+              const contentDiv = document.createElement("div");
+              contentDiv.innerHTML = content;
+              contentDiv.style.padding = "10px";
+              topicContainer.appendChild(contentDiv);
+
+              document
+                .getElementById("questiondiv")
+                .appendChild(topicContainer);
+            }
+          });
+        } else {
+          console.warn("No data available for the key:", uniqueKey);
+        }
+      }
+
+      loadAllResults();
+
+      const data2 = JSON.parse(localStorage.getItem(uniqueKey)) || {};
+      const allTopics = data2.topics || [];
+      console.log("All topics:", allTopics);
+
+      const completedTopics = allTopics.filter((topic) => {
+        const hasScore = data2[`${topic.heading}_score`] !== undefined;
+        const hasTotal = data2[`${topic.heading}_totalQuestions`] !== undefined;
+        console.log(
+          `Topic ${topic.heading}: hasScore=${hasScore}, hasTotal=${hasTotal}`,
+        );
+        return hasScore && hasTotal;
+      });
+
+      console.log("Completed topics:", completedTopics);
+
+      const scores = completedTopics.map(
+        (topic) => parseInt(data2[`${topic.heading}_score`]) || 0,
+      );
+      const totalMarks = completedTopics.map(
+        (topic) => parseInt(data2[`${topic.heading}_totalQuestions`]) || 0,
+      );
+
+      console.log("Scores:", scores);
+      console.log("Total marks:", totalMarks);
+
+      const percentageScores = scores.map((score, index) => {
+        const total = totalMarks[index];
+        return total > 0 ? (score / total) * 100 : 0;
+      });
+
+      console.log("Percentage scores:", percentageScores);
+
+      const data = {
+        labels: completedTopics.map((topic) => topic.heading),
+        datasets: [
+          {
+            label: "Percentage Scored",
+            data: percentageScores,
+            backgroundColor: "rgba(70, 192, 192, 0.6)",
+            borderColor: "rgba(70, 192, 192, 1)",
+            borderWidth: 1,
+          },
+        ],
+      };
+
+      const options = {
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 100,
+            title: {
+              display: true,
+              text: "Percentage Scored (%)",
+            },
+            ticks: {
+              callback: function (value) {
+                return value + "%";
+              },
+            },
+          },
+        },
+        plugins: {
+          legend: {
+            position: "top",
+          },
+          tooltip: {
+            callbacks: {
+              label: function (context) {
+                return (
+                  context.dataset.label + ": " + context.raw.toFixed(2) + "%"
+                );
+              },
+            },
+          },
+        },
+      };
+
+      const ctx = document.getElementById("myBarChart").getContext("2d");
+      const myBarChart = new Chart(ctx, {
+        type: "bar",
+        data: data,
+        options: options,
+      });
+
+      const marksList = document.getElementById("marksList");
+      marksList.innerHTML = "";
+
+      completedTopics.forEach((topic, index) => {
+        const li = document.createElement("li");
+        li.innerHTML = `<strong>${topic.heading}:</strong> 
+    <span>${scores[index]} / ${totalMarks[index]} 
+    (${percentageScores[index].toFixed(2)}%)</span>`;
+        marksList.appendChild(li);
+      });
+
+      // MODIFIED: Fetch total score from localStorage
+      const totalScore =
+        data2.totalScore || scores.reduce((acc, score) => acc + score, 0);
+      const totalMaxMarks = totalMarks.reduce((acc, mark) => acc + mark, 0);
+      const overallPercentage =
+        totalMaxMarks > 0 ? (totalScore / totalMaxMarks) * 100 : 0;
+
+      const totalMarksDiv = document.createElement("div");
+      totalMarksDiv.innerHTML = `<h2>Total Marks: ${totalScore} / ${totalMaxMarks} (<span>${overallPercentage.toFixed(2)}%</span>)</h2>`;
+      totalMarksDiv.style.margin = "20px 0";
+      totalMarksDiv.style.fontWeight = "600";
+
+      marksList.parentNode.insertBefore(totalMarksDiv, marksList);
+
+      async function downloadReport() {
+        const { jsPDF } = window.jspdf;
+        document.getElementById("loadingOverlay").style.display = "flex";
+
+        const pdf = new jsPDF("p", "mm", "a4");
+        pdf.setFontSize(12);
+
+        async function loadImage(src) {
+          return new Promise((resolve) => {
+            const img = new Image();
+            img.onload = () => resolve(img);
+            img.src = src;
+          });
+        }
+
+        const logo = await loadImage("./assests/logo/Logo.png");
+        const banner = await loadImage("./assests/logo/banner.png");
+
+        // MODIFIED: Add watermark function
+        //   function addWatermark(pdf) {
+        //   const pageWidth = pdf.internal.pageSize.getWidth();
+        //   const pageHeight = pdf.internal.pageSize.getHeight();
+
+        //   pdf.saveGraphicsState();
+
+        //   // Transparency
+        //   pdf.setGState(new pdf.GState({ opacity: 0.08 }));
+
+        //   // Light orange color
+        //   pdf.setTextColor(255, 180, 100);
+
+        //   pdf.setFontSize(48);
+
+        //   const text = "Way To Succeed";
+        //   const textWidth = pdf.getTextWidth(text);
+
+        //   // Exact center
+        //   const x = (pageWidth - textWidth) / 2;
+        //   const y = pageHeight / 2;
+
+        //   pdf.text(text, x, y, { angle: 45 });
+
+        //   pdf.restoreGraphicsState();
+        // }
+        function addWatermarkToPDF(pdf) {
+          const pageWidth = pdf.internal.pageSize.getWidth();
+          const pageHeight = pdf.internal.pageSize.getHeight();
+
+          // Save the current graphics state
+          pdf.saveGraphicsState();
+
+          // Set watermark properties
+          pdf.setGState(new pdf.GState({ opacity: 0.08 })); // Set opacity to 15%
+          pdf.setTextColor(255, 165, 0); // Light orange color
+          pdf.setFontSize(50); // Font size
+          pdf.setFont(undefined, "bold"); // Make it bold
+
+          // Watermark position
+          const centerX1 = pageWidth * 0.6;
+          const centerY1 = pageHeight * 0.65;
+
+          pdf.text("Way To Succeed", centerX1, centerY1, {
+            angle: 45, // 45-degree angle
+            align: "center",
+            baseline: "middle",
+          });
+
+          // Restore the graphics state
+          pdf.restoreGraphicsState();
+        }
+
+        function addLogo(pdf) {
+          const pageWidth = pdf.internal.pageSize.getWidth();
+          pdf.addImage(logo, "JPEG", pageWidth - 30, 10, 20, 20);
+        }
+
+        const bannerWidth = pdf.internal.pageSize.getWidth() - 20;
+        const bannerHeight = (banner.height * bannerWidth) / banner.width;
+        pdf.addImage(
+          banner,
+          "JPEG",
+          10,
+          10,
+          bannerWidth,
+          bannerHeight,
+          "",
+          "FAST",
+        );
+        addWatermarkToPDF(pdf);
+
+        let yOffset = bannerHeight + 20;
+
+        const chartImage = document
+          .getElementById("myBarChart")
+          .toDataURL("image/png", 0.7);
+        const chartWidth = 190;
+        const chartHeight = (chartWidth * 100) / 190;
+        pdf.addImage(
+          chartImage,
+          "JPEG",
+          10,
+          yOffset,
+          chartWidth,
+          chartHeight,
+          "",
+          "FAST",
+        );
+
+        const breakdownElement = document.getElementById("breakdown");
+
+        /* 🔹 SAVE ORIGINAL STYLES */
+        const originalStyles = {
+          background: breakdownElement.style.background,
+          boxShadow: breakdownElement.style.boxShadow,
+          border: breakdownElement.style.border,
+        };
+
+        /* 🔹 TEMPORARILY REMOVE BACKGROUND FOR PDF */
+        breakdownElement.style.background = "transparent";
+        breakdownElement.style.boxShadow = "none";
+        breakdownElement.style.border = "none";
+
+        /* 🔹 CAPTURE */
+        const breakdownCanvas = await html2canvas(breakdownElement, {
+          scale: 1,
+          backgroundColor: null,
+          useCORS: true,
+        });
+
+        /* 🔹 RESTORE ORIGINAL STYLES */
+        breakdownElement.style.background = originalStyles.background;
+        breakdownElement.style.boxShadow = originalStyles.boxShadow;
+        breakdownElement.style.border = originalStyles.border;
+
+        const breakdownImage = breakdownCanvas.toDataURL("image/png", 0.7);
+
+        const breakdownWidth = pdf.internal.pageSize.getWidth() - 20;
+        const breakdownHeight =
+          (breakdownCanvas.height * breakdownWidth) / breakdownCanvas.width;
+        const spaceLeft =
+          pdf.internal.pageSize.getHeight() - (yOffset + chartHeight + 20);
+
+        if (breakdownHeight <= spaceLeft) {
+          pdf.addImage(
+            breakdownImage,
+            "JPEG",
+            10,
+            yOffset + chartHeight + 20,
+            breakdownWidth,
+            breakdownHeight,
+            "",
+            "FAST",
+          );
+        } else {
+          pdf.addPage();
+          addLogo(pdf);
+          addWatermarkToPDF(pdf);
+          pdf.addImage(
+            breakdownImage,
+            "JPEG",
+            10,
+            10,
+            breakdownWidth,
+            breakdownHeight,
+            "",
+            "FAST",
+          );
+        }
+
+        async function addContentWithPagination(element, pdf, yOffset = 10) {
+          const canvas = await html2canvas(element, { scale: 1.5 });
+          const imageData = canvas.toDataURL("image/jpeg", 0.7);
+          const imageWidth = canvas.width;
+          const imageHeight = canvas.height;
+          const pdfWidth = 210;
+          const pdfHeight = 297;
+          const imageWidthMM = pdfWidth - 20;
+          const imageHeightMM = (imageHeight * imageWidthMM) / imageWidth;
+          const chunkHeight = pdfHeight - 20;
+          let position = yOffset;
+
+          while (position < imageHeightMM) {
+            pdf.addImage(
+              imageData,
+              "JPEG",
+              10,
+              position,
+              imageWidthMM,
+              chunkHeight,
+              "",
+              "FAST",
+            );
+            addLogo(pdf);
+            addWatermarkToPDF(pdf);
+            position += chunkHeight;
+          }
+        }
+
+        const questionContentDiv = document.getElementById("questiondiv");
+        const questionChildren = questionContentDiv.children;
+        for (let i = 0; i < questionChildren.length; i++) {
+          const questionDiv = questionChildren[i];
+          pdf.addPage();
+          addLogo(pdf);
+          addWatermarkToPDF(pdf);
+          await addContentWithPagination(questionDiv, pdf);
+        }
+
+        pdf.save(`${className}-report.pdf`);
+        document.getElementById("loadingOverlay").style.display = "none";
+        clearLocalStorage();
+        window.location.href = "thankyou.html";
+      }
+
+      document
+        .getElementById("downloadBtn")
+        .addEventListener("click", downloadReport);
+      document
+        .getElementById("downloadBtn2")
+        .addEventListener("click", downloadReport);
+
+      function resize() {
+        myBarChart.resize();
+      }
+
+      window.addEventListener("resize", resize);
+
+       function disableDevToolsSilently() {
+          // 1️⃣ Disable right-click
+          document.addEventListener("contextmenu", e => e.preventDefault());
+
+          // 2️⃣ Disable common DevTools keyboard shortcuts
+          document.addEventListener("keydown", function (e) {
+            if (
+              e.key === "F12" ||
+              (e.ctrlKey && e.shiftKey && ["I", "J", "C"].includes(e.key)) ||
+              (e.ctrlKey && e.key === "U")
+            ) {
+              e.preventDefault();
+              e.stopPropagation();
+              return false;
+            }
+          });
+
+          // 3️⃣ Disable text selection & copy
+          document.body.style.userSelect = "none";
+          document.body.style.webkitUserSelect = "none";
+          document.body.style.mozUserSelect = "none";
+
+          // 4️⃣ Silent DevTools detection (no alert, no redirect)
+          let devtoolsOpen = false;
+          const threshold = 160;
+
+          setInterval(() => {
+            const widthDiff = window.outerWidth - window.innerWidth;
+            const heightDiff = window.outerHeight - window.innerHeight;
+
+            devtoolsOpen = widthDiff > threshold || heightDiff > threshold;
+
+            if (devtoolsOpen) {
+              // Silent sabotage
+              console.clear();
+              debugger;
+            }
+          }, 800);
+        }
+
+        // Call it
+        disableDevToolsSilently();
+    </script>
+  </body>
+</html>

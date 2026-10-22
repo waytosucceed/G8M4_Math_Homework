@@ -1,0 +1,298 @@
+
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #F5F5F5; /* Light gray for background */
+    color: #333;
+    margin: 0;
+    padding: 0;
+    font-size: 20px; /* Increased base font size */
+  }
+  
+  
+  .header {
+    /* width: 100%; */
+    box-shadow: 5px 5px 10px rgb(0, 0, 0);
+    padding: 3px 5px;
+    background-color: white; 
+text-align: left;    
+  
+  }
+/* //////////////////////for mix fraction ////////////////////// */
+  /* .mixed-fraction {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2em;
+}
+
+.mixed-fraction .fraction {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1em;
+  line-height: 1;
+}
+
+.mixed-fraction .numerator {
+  border-bottom: 1px solid #000;
+  padding: 0 2px;
+}
+
+.mixed-fraction .denominator {
+  padding: 0 2px;
+} */
+
+.mixed-fraction {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2em;
+  vertical-align: middle;
+}
+
+.mixed-fraction .whole {
+  min-width: 0.6em; /* Reserve space for alignment */
+  text-align: right;
+}
+
+.mixed-fraction .fraction {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1em;
+  line-height: 1;
+}
+
+.mixed-fraction .numerator {
+  border-bottom: 1px solid #000;
+  padding: 0 2px;
+}
+
+.mixed-fraction .denominator {
+  padding: 0 2px;
+}
+
+
+/* ///////////////////////////////////////// */
+
+  
+  .logo {
+    width: 5%; /* Slightly larger logo */
+  }
+  img{
+    vertical-align: middle;
+  }
+  
+  .header-image {
+    width: 30%; 
+    height: auto;
+    margin-bottom: 10px;
+  }
+  
+  #heading {
+    /* margin-top: 25px; */
+    /* color: #D6B65B;  */
+    font-size: 3rem; /* Larger heading font size */
+    font-weight: 600;
+  }
+  .maindiv{
+    margin-top: 1%;
+    display: flex;
+    gap: 10px;
+  }
+  .quiz-container {
+    margin-top: 40px; /* Increased spacing */
+  }
+  
+  .numdiv {
+    font-size: 2.5rem; 
+    color: #7A9A5B;
+    font-family: Georgia, serif;
+  }
+  
+  .imgdiv{
+     margin-left: 2%;
+   
+  }
+  
+  #questiondiv {
+    
+    padding-bottom: 0;
+    border-radius: 10px; /* Slightly more rounded corners */
+
+    font-size: 1.8rem; /* Larger font size for questions */
+  
+    
+  }
+  
+  .menu ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .menu li {
+    /* margin-bottom: 20px; Increased spacing between options */
+    /* font-size: 2rem;  */
+    /* color: #D7A2A0; */
+    input:hover{
+        cursor: pointer;
+    }
+  }
+  
+  #picdiv.results-display {
+    display: block !important;
+    visibility: visible !important;
+}
+  
+  .btn {
+  margin: 1%;
+  font-size: 2rem;
+  /* Larger font size for buttons */
+  background-color: #ff8343;
+  border-color: #d5a35f;
+  box-shadow: 5px 5px 10px gray;
+  /* Matching border color for buttons */
+  color: white;
+  font-weight: 700;
+  text-wrap: wrap;
+}
+  .btnOption{
+    font-size: 1.8rem; /* Larger font size for buttons */
+    
+
+  }
+
+  .btnButton{
+    font-size: 1.7rem; /* Larger font size for buttons */
+    background-color: #D5A35F; 
+    border-color: #D5A35F; /* Matching border color for buttons */
+    color: white;
+
+  }
+  
+  .btn:hover {
+    background-color: #BF6C6C; 
+    border-color: #BF6C6C; 
+  }
+  
+  #result {
+    margin-top: 20px; /* Increased spacing */
+    font-size: 1.8rem; /* Larger font size for results */
+    color: #6D8E8F; /* Dark Pastel Teal for result text */
+  }
+  
+  .progress {
+    height: 30px; /* Increased height for progress bar */
+    margin-top: 20px; /* Increased spacing */
+  }
+  
+  .progress-bar {
+    transition: width 0.6s ease;
+  }
+  
+  
+  
+  .smallbtn {
+    margin: 3px; /* Increased spacing */
+    font-size: 1.5rem; /* Larger font size for small buttons */
+    background-color: #FFDE4D; 
+    border-color: #6D8E8F; /* Matching border color for small buttons */
+    color: black;
+    margin-bottom: 0.5%;
+  }
+  
+  .smallbtn:hover {
+    background-color:white; 
+    border-color: black; 
+    color: black
+  }
+  
+  .highlighted-btn {
+    background-color: yellow;
+    color: black;
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+  }
+  
+  /* CSS for Answered Button */
+.answered-btn {
+    background-color: #4CAF50; /* Green background for answered button */
+    color: white; /* White text color */
+}
+
+
+.next-btn-progress{
+  font-size:x-large;
+  background-color: #4CAF50; 
+  border-color: black; /* Matching border color for buttons */
+  color: white;
+  font-weight: 700;
+}
+
+/* Increase the size of radio buttons */
+input[type="radio"] {
+  transform: scale(1.5); /* Adjust the scale value as needed */
+  margin-right: 10px; /* Add some space between the radio button and the label */
+}
+
+/* Adjust the label to align with the larger radio button */
+input[type="radio"] + label {
+  font-size: 1.2rem; /* Adjust the font size as needed */
+}
+
+/* CSS for displaying fractions in results */
+.display-fraction {
+  display: inline-flex;
+  align-items: center;
+  margin: 0 5px;
+  vertical-align: middle;
+}
+
+.display-fraction .whole-part {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+.display-fraction .fraction-part {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 1em;
+  line-height: 1;
+}
+
+.display-fraction .numerator {
+  display: block;
+  padding: 0 5px;
+  margin-bottom: 2px;
+  border-bottom: 1px solid #000;
+}
+
+.display-fraction .fraction-line {
+  display: block;
+  padding: 0;
+  margin: 0;
+  font-family: monospace;
+  font-size: 0.8em;
+}
+
+.display-fraction .denominator {
+  display: block;
+  padding: 0 5px;
+  margin-top: 2px;
+}
+
+/* Ensure fractions display properly in different contexts */
+.question-page .display-fraction {
+  vertical-align: baseline;
+}
+
+/* For better alignment in results display */
+br + .display-fraction,
+.display-fraction + br {
+  vertical-align: middle;
+}

@@ -1,0 +1,298 @@
+{
+  "heading": "Assessment",
+  "topics": [
+    
+ {
+    "heading": "Simplifying Brackets & Multiplying Expressions",
+    "questions": [
+      {
+        "questionNo": 1,
+        "type": "drop-down",
+        "question": "Simplify the following by expanding and then collecting like terms.<br>4(9 − 2b) + 3(5b − 4) <br> = ______ b  <drop>______</drop> ______",
+        "input": ["", "", ""],
+        "dropdowns": { "1": ["+", "-"] },
+        "answer": ["7", "+", "24"]
+      },
+      {
+        "questionNo": 2,
+        "type": "drop-down",
+        "question": "Find the product.<br>(3m − 5)(m + 4)<br>= ______ <sup>______</sup> <drop>______</drop> ______ <drop>______</drop> ______",
+        "input": ["", "", "", "", "", "", ""],
+        "dropdowns": {
+          "2": ["+", "-"],
+          "4": ["+", "-"]
+        },
+        "answer": ["3m", "2", "+", "7m", "-", "20"]
+      },
+      {
+        "questionNo": 3,
+        "question": "Two friends, Noah and Liam, are discussing their answers to the following question:<br>Work out the HCF of 24ab and 36a.<br>Noah says: \"The HCF of 24ab and 36a is 12ab.\"<br>Liam says: \"The HCF of 24ab and 36a is 12a.\"<br>Who is correct?",
+        "options": [
+          { "text": "Noah" },
+          { "text": "Liam" },
+          { "text": "Neither Noah nor Liam" }
+        ],
+        "answer": 1
+      },
+      {
+        "questionNo": 4,
+        "question": "Factorise the following expression using the given HCF.<br>−20n − 35<br>−5( ______ + ______ )",
+        "input": ["", ""],
+        "answer": ["4n", "7"]
+      },
+      {
+        "questionNo": 5,
+        "type": "drop-down",
+        "question": "Factorise the following expression.<br>5ax + 15ay − 2bx − 6by<br>(______ <drop>______</drop> ______)(______ <drop>______</drop>______)",
+        "input": ["", "", "", "", "", ""],
+        "dropdowns": {
+          "1": ["+", "-"],
+          "4": ["+", "-"]
+        },
+        "answer": ["x", "+", "3y", "5a", "-", "2b"]
+      }
+    ]
+  },
+  {
+    "heading": "Algebraic Fractions, Solving Linear Equations & Applying Algebra",
+    "questions": [
+      {
+        "questionNo": 6,
+        "question": [
+          "Simplify the following fraction by factorising first.<br>",
+          { "fraction": { "numerator": "6x + 18", "denominator": "8x + 24" } },
+          " = ",
+          { "fraction": { "numerator": "______", "denominator": "______" } }
+        ],
+        "input": ["", ""],
+        "answer": ["3", "4"],
+        "altAnswer": [["6", "8"]]
+      },
+      {
+        "questionNo": 7,
+        "question": "Find the correct value of m that satisfies the equation below.<br>5(m + 2) = 3m + 18<br>m = ______",
+        "input": [""],
+        "answer": ["4"]
+      },
+      {
+        "questionNo": 8,
+        "type": "drop-down",
+        "question": "A number, n, is increased by 5 and then multiplied by 4. The result is 52.<br>Write an equation to represent this situation.<br>Equation: ______( ______ <drop>______</drop> ______) = ______",
+        "input": ["", "", "", "", ""],
+        "dropdowns": { "2": ["+", "-"] },
+        "answer": ["4", "n", "+", "5", "52"]
+      },
+      {
+        "questionNo": 9,
+        "type": "drop-down",
+        "question": "A gym charges a fixed membership fee of $20 plus $15 for each class.<br>A customer pays $95.<br>Represent the number of classes with the variable c.<br>Write an equation: ______ <drop>______</drop>______ = ______<br>c = ______",
+        "input": ["", "", "", "", ""],
+        "dropdowns": { "1": ["+", "-"] },
+        "answer": ["20", "+", "15c", "95", "5"]
+      },
+      {
+        "questionNo": 10,
+        "question": "Emma is 4 years older than Ava.<br>Twice the sum of their ages is 40 years.<br>Represent Ava's age with the variable a.<br>Equation:<br>______ [ ______ + (______ + ______)] = ______<br>Emma's age = ______",
+        "input": ["", "", "", "", "", ""],
+        "answer": ["2", "a", "a", "4", "40", "12"]
+      }
+    ]
+  },
+  {
+    "heading": "Coordinate Plane & Coordinate Geometry",
+    "questions": [
+      {
+        "questionNo": 11,
+        "question": "If (p, q) is a point on the coordinate plane and q < 0, then the point may lie in:",
+        "options": [
+          { "text": "Quadrants I and II" },
+          { "text": "Quadrants II and III" },
+          { "text": "Quadrants I and IV" },
+          { "text": "Quadrants III and IV" }
+        ],
+        "answer": 3
+      },
+      {
+        "questionNo": 12,
+        "question": "Find the distance between the points (4, −1) and (4, 6).<br>Answer: ______ units",
+        "input": [""],
+        "answer": ["7"]
+      },
+      {
+        "questionNo": 13,
+        "question": "Find the midpoint of the line segment joining (−4, 6) and (2, 0).<br>Answer: = ( ______ , ______ )",
+        "input": ["", ""],
+        "answer": ["-1", "3"]
+      },
+      {
+        "questionNo": 14,
+        "question": "The rule for the graph is y = 3x − 2.<br>Which of the following points satisfies the rule?",
+        "options": [
+          { "text": "(2, 4)" },
+          { "text": "(1, 2)" }
+        ],
+        "answer": 0
+      },
+      {
+        "questionNo": 15,
+        "type": "drop-down",
+        "question": "Find the rule from the graph.<br><img  src = './assests/images/question/6.png' width = '30%' ><br>Rule:  y = ______ <drop>______</drop> ______",
+        "input": ["", "", ""],
+        "dropdowns": { "1": ["+", "-"] },
+        "answer": ["3x", "-", "1"]
+      }
+    ]
+  },
+  {
+    "heading": "Gradient–Intercept Form",
+    "questions": [
+      {
+        "questionNo": 16,
+        "question": "Determine the gradient of the line.<br><img  src = './assests/images/question/7.png' width = '40%' ><br>Gradient = ______",
+        "input": [""],
+        "answer": ["1"]
+      },
+      {
+        "questionNo": 17,
+        "question": "Two hiking trails are being compared.<br>Trail A rises 18 m for every 15 m across.<br>Trail B rises 12 m for every 8 m across.<br>Which trail is steeper?",
+        "options": [
+          { "text": "Trail A" },
+          { "text": "Trail B" }
+        ],
+        "answer": 1
+      },
+      {
+        "questionNo": 18,
+        "type": "drop-down",
+        "question": "A straight line passes through the points (0, −4) and (3, 5).<br><img  src = './assests/images/question/8.png' width = '30%' ><br>Write the equation of the line by first finding the values of m and b.<br>m = ______<br>b = ______<br>Therefore, the equation of the line is  y =  ______ <drop>______</drop> ______.",
+        "input": ["", "", "", "", ""],
+        "dropdowns": { "3": ["+", "-"] },
+        "answer": ["3", "-4", "3x", "-", "4"]
+      },
+      {
+        "questionNo": 19,
+        "type": "graph",
+        "question": [
+          "The equation of a straight line is given below.<br>",
+          "y = 2x - 1<br>",
+          "Use the gradient and the y-intercept to sketch the graph.<br>",
+          "<i>Plot the y-intercept first. Then use the gradient to plot two more points on the graph.</i>"
+        ],
+        "graph": {
+          "xMin": -5, "xMax": 5, "yMin": -5, "yMax": 5,
+          "equation": { "m": 2, "b": -1 },
+          "mustPlot": [[0, -1], [1, 1], [2, 3]],
+          "mustPlotAlt": [[[-1, -3], [0, -1], [1, 1]]]
+        }
+      },
+      {
+        "questionNo": 20,
+        "type": "graph",
+        "question": [
+          "The equation of a graph is given below.<br>",
+          "y = 4x - 8<br>",
+          "Find the x-intercept and the y-intercept. Then, use the intercepts to draw the graph."
+        ],
+        "graph": {
+          "xMin": -6, "xMax": 6, "xStep": 1,
+          "yMin": -14, "yMax": 14, "yStep": 2,
+          "mustPlot": [[2, 0], [0, -8]]
+        },
+        "answer": { "xIntercept": 2, "yIntercept": -8 }
+      }
+    ]
+  },
+  {
+    "heading": "Linear & Non-Linear Graphs",
+    "questions": [
+      {
+        "questionNo": 21,
+        "question": "The graph of y = 3x − 2 is shown.<br><img  src = './assests/images/question/11.png' width = '35%' ><br>Use the graph to find the solution to the equation.<br>3x − 2 = 10<br>x = ______",
+        "input": [""],
+        "answer": ["4"]
+      },
+      {
+        "questionNo": 22,
+        "question": "The equations of two straight lines are given below.<br>y = 2x + 3<br>y = −x + 6<br>The point (2, 7) is given.<br>Which of the following statements is correct?",
+        "options": [
+          { "text": "The point (2, 7) is a solution only to the equation y = 2x + 3." },
+          { "text": "The point (2, 7) is a solution only to the equation y = −x + 6." },
+          { "text": "The point (2, 7) is a solution to both equations." },
+          { "text": "The point (2, 7) is not a solution to either equation." }
+        ],
+        "answer": 0
+      },
+      {
+        "questionNo": 23,
+        "question": "This graph shows the distance travelled by a cyclist.<br><img  src = './assests/images/question/12.png' width = '35%' ><br>After how many hours will the cyclist have travelled 90 km?<br>Answer: ______ hours",
+        "input": [""],
+        "answer": ["6"]
+      },
+      {
+        "questionNo": 24,
+        "question": "Observe the graph shown.<br><img  src = './assests/images/question/13.png' width = '35%' ><br>Write L if it is a linear graph or NL if it is a non-linear graph.______",
+        "input": [""],
+        "answer": ["NL"]
+      },
+      {
+        "questionNo": 25,
+        "question": "Which of the following rules will produce a non-linear graph?",
+        "options": [
+          { "text": "A. &nbsp;&nbsp;&nbsp; y = 6x − 4" },
+          { "text": "B. &nbsp;&nbsp;&nbsp; y = x² − 3" },
+          { "text": "C. &nbsp;&nbsp;&nbsp; y = x⁴ + 2" },
+          { "text": "D. &nbsp;&nbsp;&nbsp; Both B and C" }
+        ],
+        "answer": 3
+      }
+    ]
+  },
+  {
+    "heading": "Triangles & Perimeter",
+    "questions": [
+      {
+        "questionNo": 26,
+        "question": "Two sides of a triangle are 8 cm and 11 cm.<br>Which of the following can be the third side?",
+        "options": [
+          { "text": "2 cm" },
+          { "text": "3 cm" },
+          { "text": "10 cm" },
+          { "text": "20 cm" }
+        ],
+        "answer": 2
+      },
+      {
+        "questionNo": 27,
+        "question": "A 13 m ladder reaches 12 m up a wall.<br>How far is the foot of the ladder from the wall?<br>______ m",
+        "input": [""],
+        "answer": ["5"]
+      },
+      {
+        "questionNo": 28,
+        "question": "The total boundary length of a rectangle is 76 cm.<br>The length is 4 cm more than the width.<br>The width is ______ mm.",
+        "input": [""],
+        "answer": ["170"]
+      },
+      {
+        "questionNo": 29,
+        "question": "Liam says,<br>\"If the length and the width of a rectangle are each increased by 6 cm, then the total boundary length increases by 24 cm.\"<br>Is Liam correct?",
+        "options": [
+          { "text": "Yes" },
+          { "text": "No" }
+        ],
+        "answer": 0
+      },
+      {
+        "questionNo": 30,
+        "question": "The total boundary length of a rectangle is 112 cm.<br>If its width is 20 cm, then its length is ______ m.",
+        "input": [""],
+        "answer": ["0.36"]
+      }
+    ]
+  
+
+  }
+
+
+  ]
+}
